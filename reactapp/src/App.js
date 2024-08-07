@@ -1,5 +1,5 @@
 import './App.css';
-import Navbar from './components/navbar';
+import Navbar from './components/navbar/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages';
 import { Amplify } from 'aws-amplify';
