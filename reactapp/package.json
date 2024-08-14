@@ -47,8 +47,6 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.35.0",
     "eslint-plugin-react-hooks": "^4.6.2"
-  },
-  "overrides": {
-    "glob": "9.0.0"
   }
+
 }

@@ -7,6 +7,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
 
+import Favorites from './pages/Favorites';
 
 Amplify.configure(awsExports);
 
@@ -17,6 +18,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </Router>
     </Authenticator>
