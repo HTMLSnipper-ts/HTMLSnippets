@@ -9,7 +9,6 @@ import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/webpack-resolver';
 import './style.css';
 
-
 const LiveCodeEditor = () => {
   const htmlEditorRef = useRef(null);
   const cssEditorRef = useRef(null);
@@ -32,9 +31,12 @@ const LiveCodeEditor = () => {
         enableBasicAutocompletion: true,
         enableSnippets: true,
         enableLiveAutocompletion: false,
-        fontFamily: monospace
+        fontFamily: 'Courier, monospace', // Prevents ACE cursor position error
+        foldStyle: 'manual', // Disables automatic folding
+        useWorker: false // Disables error checking, if it's related to folding
       });
     });
+
 
     htmlEditor.session.setMode('ace/mode/html');
     cssEditor.session.setMode('ace/mode/css');
