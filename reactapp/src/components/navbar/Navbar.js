@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< Updated upstream
 import { signOut } from 'aws-amplify/auth';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Nav, NavLink, Bars, NavMenu, NavBtn } from './NavbarElements';
@@ -13,17 +12,6 @@ async function handleSignOut() {
     console.log('error signing out: ', error);
   }
 }
-=======
-import { useAuthenticator } from '@aws-amplify/ui-react';
-import {
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-  NavBtn,
-  NavBtnLink
-} from './NavbarElements';
->>>>>>> Stashed changes
 
 const Navbar = () => {
   const { user } = useAuthenticator((context) => [context.user]);
@@ -38,7 +26,6 @@ const Navbar = () => {
         <NavLink to='/about'>
           HTML
         </NavLink>
-<<<<<<< Updated upstream
         <NavLink to='/services'>
           CSS
         </NavLink>
@@ -62,33 +49,6 @@ const Navbar = () => {
         <button onClick={handleSignOut}>Sign Out</button>
       </NavBtn>
     </Nav>
-=======
-        <Bars />
-        <NavMenu>
-          <NavLink to='/code-editor' activeStyle>
-            HTML
-          </NavLink>
-          <NavLink to='/services' activeStyle>
-            CSS
-          </NavLink>
-          <NavLink to='/contact-us' activeStyle>
-            JS
-          </NavLink>
-          <NavLink to='/sign-up' activeStyle>
-            Sign Up
-          </NavLink>
-          {user && (
-            <span style={{ marginLeft: '20px', color: 'white' }}>
-              Hello, {user.username}!
-            </span>
-          )}
-        </NavMenu>
-        <NavBtn>
-          <NavBtnLink to='/signin'>Sign In</NavBtnLink>
-        </NavBtn>
-      </Nav>
-    </>
->>>>>>> Stashed changes
   );
 };
 
