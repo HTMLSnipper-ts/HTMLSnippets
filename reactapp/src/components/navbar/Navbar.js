@@ -3,6 +3,7 @@ import { signOut } from 'aws-amplify/auth';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Nav, NavLink, Bars, NavMenu, NavBtn } from './NavbarElements';
 
+
 async function handleSignOut() {
   try {
     await signOut();
@@ -35,9 +36,13 @@ const Navbar = () => {
           Sign Up
         </NavLink>
         {user && (
-          <NavLink to='/favorites'>
-            Favorites
-          </NavLink>
+          <>
+            <NavLink to='/favorites'>
+              Favorites
+            </NavLink>
+            <span style={{ marginLeft: '20px', color: 'white' }}>
+              Hello, {user.username}!
+            </span>          </>
         )}
       </NavMenu>
       <NavBtn>
