@@ -2,7 +2,7 @@ import React from 'react';
 import { signOut } from 'aws-amplify/auth';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Nav, NavLink, Bars, NavMenu, NavBtn } from './NavbarElements';
-
+import { useNavigate } from 'react-router-dom';
 
 async function handleSignOut() {
   try {
@@ -13,8 +13,16 @@ async function handleSignOut() {
   }
 }
 
-const Navbar = () => {
+const Navbar = ({ setEditorData }) => {
   const { user } = useAuthenticator((context) => [context.user]);
+  const navigate = useNavigate();
+
+  const handleEditorNavigation = () => {
+    if (user) {
+      setEditorData(user.username);
+      navigate('/code-editor');
+    }
+  };
 
   return (
     <Nav>
@@ -23,9 +31,9 @@ const Navbar = () => {
       </NavLink>
       <Bars />
       <NavMenu>
-      <NavLink to='/code-editor' activeStyle>
-            HTML
-          </NavLink>
+        <NavLink to='/code-editor' activeStyle onClick={handleEditorNavigation}>
+          HTML
+        </NavLink>
         <NavLink to='/services'>
           CSS
         </NavLink>
@@ -42,7 +50,8 @@ const Navbar = () => {
             </NavLink>
             <span style={{ marginLeft: '20px', color: 'white' }}>
               Hello, {user.username}!
-            </span>          </>
+            </span>
+          </>
         )}
       </NavMenu>
       <NavBtn>
