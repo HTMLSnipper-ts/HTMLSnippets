@@ -1,11 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
-import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/webpack-resolver';
 import './style.css';
 
@@ -14,6 +13,8 @@ const LiveCodeEditor = ({ editorData }) => {
   const cssEditorRef = useRef(null);
   const jsEditorRef = useRef(null);
   const outputRef = useRef(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     const ace = require('ace-builds');
@@ -69,17 +70,11 @@ const LiveCodeEditor = ({ editorData }) => {
     run();
   }, []);
 
-  console.log(editorData)
-
   const handleSubmit = async () => {
     const htmlCode = htmlEditorRef.current.env.editor.getValue();
     const cssCode = cssEditorRef.current.env.editor.getValue();
     const jsCode = jsEditorRef.current.env.editor.getValue();
-  
-    // Prompt the user for a title and description
-    const title = window.prompt("Please enter a title for your code:");
-    const description = window.prompt("Please enter a description:");
-  
+
     if (!title || !description) {
       alert("Title and description are required.");
       return;
@@ -121,7 +116,28 @@ const LiveCodeEditor = ({ editorData }) => {
 
   return (
     <div className="container">
+      
       <div className="left">
+        <div className="input-group">
+          <label>Title:</label>
+          <input 
+            className="input-group"
+            type="text" 
+            value={title} 
+            onChange={(e) => setTitle(e.target.value)} 
+            placeholder="Enter the title" 
+          />
+        </div>
+
+        <div className="input-group">
+          <label>Description:</label>
+          <textarea 
+            className="input-group"
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)} 
+            placeholder="Enter the description" 
+          />
+        </div>
         <label><i className="fa-brands fa-html5"></i> HTML</label>
         <div id="html-editor" ref={htmlEditorRef} className="code-editor"></div>
 

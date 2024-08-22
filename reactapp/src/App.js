@@ -21,7 +21,7 @@ function App() {
       <Router>
         <Navbar setEditorData={setEditorData} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home setEditorData={setEditorData} />} />
           <Route path="/code-editor" element={<LiveCodeEditor editorData={editorData} />} />
         </Routes>
       </Router>
