@@ -94,3 +94,16 @@ export const NavBtnLink = styled(Link)`
     color: #010606;
   }
 `;
+
+export const SearchForm = styled.form`
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+`;
+
+export const SearchInput = styled.input`
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+`;
