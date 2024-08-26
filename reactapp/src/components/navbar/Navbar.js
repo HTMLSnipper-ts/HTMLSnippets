@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { signOut } from 'aws-amplify/auth';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { fetchUserAttributes } from '@aws-amplify/auth'; // Import fetchUserAttributes
 import { Nav, NavLink, Bars, NavMenu, NavBtn, SearchInput, SearchForm } from './NavbarElements';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +17,24 @@ async function handleSignOut() {
 const Navbar = () => {
   const { user } = useAuthenticator((context) => [context.user]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [userEmail, setUserEmail] = useState(''); // State to store user's email
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Function to fetch user attributes
+    const fetchEmail = async () => {
+      try {
+        const userAttributes = await fetchUserAttributes();
+        setUserEmail(userAttributes.email); // Set the user's email
+      } catch (error) {
+        console.log('Error fetching user attributes:', error);
+      }
+    };
+
+    if (user) {
+      fetchEmail(); // Fetch email only if the user is logged in
+    }
+  }, [user]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -54,7 +72,7 @@ const Navbar = () => {
               Favorites
             </NavLink>
             <span style={{ marginLeft: '20px', color: 'white' }}>
-              Hello, {user.username}!
+              Hello, {userEmail || user.username}!
             </span>
           </>
         )}
