@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { signOut } from 'aws-amplify/auth';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-import { Nav, NavLink, Bars, NavMenu, NavBtn } from './NavbarElements';
+import { fetchUserAttributes } from '@aws-amplify/auth'; // Import fetchUserAttributes
+import { Nav, NavLink, Bars, NavMenu, NavBtn, SearchInput, SearchForm } from './NavbarElements';
 import { useNavigate } from 'react-router-dom';
 
 async function handleSignOut() {
@@ -15,12 +16,34 @@ async function handleSignOut() {
 
 const Navbar = ({ setEditorData }) => {
   const { user } = useAuthenticator((context) => [context.user]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [userEmail, setUserEmail] = useState(''); // State to store user's email
   const navigate = useNavigate();
 
-  const handleEditorNavigation = () => {
+  useEffect(() => {
+    // Function to fetch user attributes
+    const fetchEmail = async () => {
+      try {
+        const userAttributes = await fetchUserAttributes();
+        setUserEmail(userAttributes.email); // Set the user's email
+      } catch (error) {
+        console.log('Error fetching user attributes:', error);
+      }
+    };
+
     if (user) {
-      setEditorData(user.username);
-      navigate('/code-editor');
+      fetchEmail(); // Fetch email only if the user is logged in
+    }
+  }, [user]);
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      navigate(`/search/${searchTerm}`);
     }
   };
 
@@ -31,7 +54,7 @@ const Navbar = ({ setEditorData }) => {
       </NavLink>
       <Bars />
       <NavMenu>
-        <NavLink to='/code-editor' activeStyle onClick={handleEditorNavigation}>
+        <NavLink to='/code-editor' activeStyle>
           HTML
         </NavLink>
         <NavLink to='/services'>
@@ -49,10 +72,18 @@ const Navbar = ({ setEditorData }) => {
               Favorites
             </NavLink>
             <span style={{ marginLeft: '20px', color: 'white' }}>
-              Hello, {user.username}!
+              Hello, {userEmail || user.username}!
             </span>
           </>
         )}
+        <SearchForm onSubmit={handleSearchSubmit}>
+          <SearchInput
+            type='text'
+            placeholder='Search...'
+            value={searchTerm}
+            onChange={handleSearchChange}
+          />
+        </SearchForm>
       </NavMenu>
       <NavBtn>
         <button onClick={handleSignOut}>Sign Out</button>

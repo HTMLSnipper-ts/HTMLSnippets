@@ -44,5 +44,4 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 
-#Properties-Files
 ../CodeSnippetLambda/src/main/resources/application.properties

@@ -73,7 +73,7 @@ public class SnippetController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     // Update a Snippet
     @PutMapping("/{snippetID}")
     public ResponseEntity<Snippet> updateSnippet(@PathVariable("snippetID") int snippetID, @RequestBody Snippet snippet) {
@@ -90,6 +90,18 @@ public class SnippetController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/search/{query}")
+    public ResponseEntity<List<Snippet>> searchSnippets(@PathVariable("query") String query) {
+        try {
+            List<Snippet> snippets = snippetService.searchSnippets(query);
+            if (snippets.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(snippets, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
