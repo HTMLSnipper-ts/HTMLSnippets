@@ -2,9 +2,6 @@ package com.example.CodeSnippetLambda;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-
-import com.example.CodeSnippetLambda.controller.PingController;
 
 
 @SpringBootApplication

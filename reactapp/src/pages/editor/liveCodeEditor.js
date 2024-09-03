@@ -1,19 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import 'ace-builds/src-noconflict/ace';
 import 'ace-builds/src-noconflict/mode-html';
 import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-javascript';
 import 'ace-builds/src-noconflict/theme-monokai';
 import 'ace-builds/src-noconflict/ext-language_tools';
-import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/webpack-resolver';
 import './style.css';
 
+
 const LiveCodeEditor = ({ editorData, codeSnippData }) => {
+
   const htmlEditorRef = useRef(null);
   const cssEditorRef = useRef(null);
   const jsEditorRef = useRef(null);
   const outputRef = useRef(null);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     const ace = require('ace-builds');
@@ -31,12 +34,11 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
         enableBasicAutocompletion: true,
         enableSnippets: true,
         enableLiveAutocompletion: false,
-        fontFamily: 'Courier, monospace', // Prevents ACE cursor position error
-        foldStyle: 'manual', // Disables automatic folding
-        useWorker: false // Disables error checking, if it's related to folding
+        fontFamily: 'Courier, monospace',
+        foldStyle: 'manual',
+        useWorker: false
       });
     });
-
 
     htmlEditor.session.setMode('ace/mode/html');
     cssEditor.session.setMode('ace/mode/css');
@@ -120,8 +122,53 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
     }
   };
 
+  const handleSubmit = async () => {
+    const htmlCode = htmlEditorRef.current.env.editor.getValue();
+    const cssCode = cssEditorRef.current.env.editor.getValue();
+    const jsCode = jsEditorRef.current.env.editor.getValue();
+
+    if (!title || !description) {
+      alert("Title and description are required.");
+      return;
+    }
+
+    if (!editorData) {
+      alert("Something went wrong");
+      return;
+    }
+    
+    const payload = {
+      userID: editorData, // Username passed from Navbar
+      title: title,
+      description: description,
+      htmlCode: htmlCode,
+      cssCode: cssCode,
+      jsCode: jsCode,
+    };
+  
+    try {
+      const response = await fetch('https://3j51dwtcd5.execute-api.us-east-1.amazonaws.com/Cors/api/snippets', { // Replace with your actual API endpoint
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+  
+      if (response.ok) {
+        alert('Code saved successfully!');
+      } else {
+        alert('Failed to save code.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred while saving the code.');
+    }
+  };
+
   return (
     <div className="container">
+      
       <div className="left">
         <div className="input-group">
           <label>Title:</label>
@@ -131,7 +178,9 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
             value={title} 
             onChange={(e) => setTitle(e.target.value)} 
             placeholder="Enter the title" 
+
             readOnly={!!codeSnippData} // Set readOnly if codeSnippData is not null
+
           />
         </div>
 
@@ -142,7 +191,9 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
             value={description} 
             onChange={(e) => setDescription(e.target.value)} 
             placeholder="Enter the description" 
+
             readOnly={!!codeSnippData} // Set readOnly if codeSnippData is not null
+
           />
         </div>
         <label><i className="fa-brands fa-html5"></i> HTML</label>
@@ -155,6 +206,7 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
         <div id="js-editor" ref={jsEditorRef} className="code-editor"></div>
 
         <button onClick={handleSubmit} className="submit-button" disabled={!!codeSnippData}>Submit</button>
+
       </div>
       <div className="right">
         <label><i className="fa-solid fa-play"></i> Output</label>

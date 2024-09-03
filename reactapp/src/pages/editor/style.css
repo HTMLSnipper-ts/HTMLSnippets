@@ -59,3 +59,7 @@ label {
   direction: ltr !important;
   text-align: left !important;
 }
+
+.input-group {
+  width: 100%;
+}

@@ -31,7 +31,6 @@ com\example\CodeSnippetLambda\service\impl\SnippetServiceImpl.class
 com\example\CodeSnippetLambda\controller\UserController.class
 com\example\CodeSnippetLambda\model\UserFavorites$UserFavoritesId.class
 com\example\CodeSnippetLambda\service\impl\UserFollowsServiceImpl.class
-com\example\CodeSnippetLambda\controller\PingController.class
 com\example\CodeSnippetLambda\controller\UserBlocksController.class
 com\example\CodeSnippetLambda\service\impl\UserServiceImpl.class
 com\example\CodeSnippetLambda\controller\UserFavoritesController.class

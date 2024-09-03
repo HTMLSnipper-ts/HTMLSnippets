@@ -8,6 +8,7 @@ import { Amplify } from 'aws-amplify';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import awsExports from './aws-exports';
+import { useState } from 'react';
 
 Amplify.configure(awsExports);
 
@@ -15,10 +16,11 @@ function App() {
   const [editorData, setEditorData] = useState(null);
   const [codeSnippData, setCodeSnippData] = useState(null);
 
+
   return (
     <Authenticator loginMechanism={['email']}>
       <Router>
-        <Navbar />
+        <Navbar setEditorData={setEditorData} />
         <Routes>
           <Route path="/" element={<Home codeSnippData={codeSnippData} setCodeSnippData={setCodeSnippData} />} />
           <Route path="/code-editor" element={<LiveCodeEditor editorData={editorData} codeSnippData={codeSnippData}/>} />
