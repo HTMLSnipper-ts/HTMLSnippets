@@ -1,17 +1,11 @@
-<<<<<<< Updated upstream
-import React from 'react'
-=======
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({ setCodeSnippData }) => {
+const Home = ({ setEditorData }) => {
   const [payloads, setPayloads] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-
-    setCodeSnippData(null);
-
     // Fetch the payload data from the server
     const fetchData = async () => {
       try {
@@ -28,23 +22,41 @@ const Home = ({ setCodeSnippData }) => {
     };
 
     fetchData();
-  }, [setCodeSnippData]);
-
-  console.log(payloads)
+  }, []);
 
   const handleClick = (payload) => {
     // Set the editor data and navigate to the code editor
-    setCodeSnippData(payload);
+    setEditorData(payload);
     navigate('/code-editor');
   };
->>>>>>> Stashed changes
 
-const Home = () => {
   return (
-    <div style = {{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh'}}>
-        <h1> Home</h1>
+    <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', height: '90vh' }}>
+      {payloads.length > 0 ? (
+        payloads.map((payload, index) => (
+          <div
+            key={index}
+            onClick={() => handleClick(payload)}
+            style={{
+              border: '1px solid #ccc',
+              borderRadius: '8px',
+              padding: '20px',
+              margin: '10px',
+              cursor: 'pointer',
+              width: '200px',
+              textAlign: 'center',
+              backgroundColor: 'blue',
+            }}
+          >
+            <h3>{payload.title}</h3>
+            <p>{payload.description}</p>
+          </div>
+        ))
+      ) : (
+        <h1>No Saved Codes</h1>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
