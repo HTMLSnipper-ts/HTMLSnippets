@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({ setEditorData }) => {
+const Home = ({ setCodeSnippData }) => {
   const [payloads, setPayloads] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setCodeSnippData(null)
+
     // Fetch the payload data from the server
     const fetchData = async () => {
       try {
@@ -26,7 +28,7 @@ const Home = ({ setEditorData }) => {
 
   const handleClick = (payload) => {
     // Set the editor data and navigate to the code editor
-    setEditorData(payload);
+    setCodeSnippData(payload);
     navigate('/code-editor');
   };
 
