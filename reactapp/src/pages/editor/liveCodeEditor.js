@@ -9,11 +9,7 @@ import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/webpack-resolver';
 import './style.css';
 
-<<<<<<< Updated upstream
-const LiveCodeEditor = () => {
-=======
 const LiveCodeEditor = ({ editorData, codeSnippData }) => {
->>>>>>> Stashed changes
   const htmlEditorRef = useRef(null);
   const cssEditorRef = useRef(null);
   const jsEditorRef = useRef(null);
@@ -85,8 +81,6 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
     run();
   }, [codeSnippData]);
 
-<<<<<<< Updated upstream
-=======
   const handleSubmit = async () => {
     if (!title || !description) {
       alert("Title and description are required.");
@@ -126,12 +120,9 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
     }
   };
 
->>>>>>> Stashed changes
   return (
     <div className="container">
       <div className="left">
-<<<<<<< Updated upstream
-=======
         <div className="input-group">
           <label>Title:</label>
           <input 
@@ -154,7 +145,6 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
             readOnly={!!codeSnippData} // Set readOnly if codeSnippData is not null
           />
         </div>
->>>>>>> Stashed changes
         <label><i className="fa-brands fa-html5"></i> HTML</label>
         <div id="html-editor" ref={htmlEditorRef} className="code-editor"></div>
 
@@ -163,11 +153,8 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
 
         <label><i className="fa-brands fa-js"></i> JavaScript</label>
         <div id="js-editor" ref={jsEditorRef} className="code-editor"></div>
-<<<<<<< Updated upstream
-=======
 
         <button onClick={handleSubmit} className="submit-button" disabled={!!codeSnippData}>Submit</button>
->>>>>>> Stashed changes
       </div>
       <div className="right">
         <label><i className="fa-solid fa-play"></i> Output</label>
