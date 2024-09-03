@@ -122,49 +122,6 @@ const LiveCodeEditor = ({ editorData, codeSnippData }) => {
     }
   };
 
-  const handleSubmit = async () => {
-    const htmlCode = htmlEditorRef.current.env.editor.getValue();
-    const cssCode = cssEditorRef.current.env.editor.getValue();
-    const jsCode = jsEditorRef.current.env.editor.getValue();
-
-    if (!title || !description) {
-      alert("Title and description are required.");
-      return;
-    }
-
-    if (!editorData) {
-      alert("Something went wrong");
-      return;
-    }
-    
-    const payload = {
-      userID: editorData, // Username passed from Navbar
-      title: title,
-      description: description,
-      htmlCode: htmlCode,
-      cssCode: cssCode,
-      jsCode: jsCode,
-    };
-  
-    try {
-      const response = await fetch('https://3j51dwtcd5.execute-api.us-east-1.amazonaws.com/Cors/api/snippets', { // Replace with your actual API endpoint
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-  
-      if (response.ok) {
-        alert('Code saved successfully!');
-      } else {
-        alert('Failed to save code.');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('An error occurred while saving the code.');
-    }
-  };
 
   return (
     <div className="container">
