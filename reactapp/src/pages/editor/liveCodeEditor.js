@@ -8,7 +8,9 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/webpack-resolver';
 import './style.css';
 
-const LiveCodeEditor = ({ editorData }) => {
+
+const LiveCodeEditor = ({ editorData, codeSnippData }) => {
+
   const htmlEditorRef = useRef(null);
   const cssEditorRef = useRef(null);
   const jsEditorRef = useRef(null);
@@ -61,30 +63,36 @@ const LiveCodeEditor = ({ editorData }) => {
       });
     });
 
-    // Set default code
-    htmlEditor.setValue('<div>Hello, World!</div>', -1);
-    cssEditor.setValue('div { color: red; }', -1);
-    jsEditor.setValue('console.log("Hello, World!");', -1);
+    // Set title, description, and editor content
+    if (codeSnippData) {
+      setTitle(codeSnippData.title);
+      setDescription(codeSnippData.description);
+      htmlEditor.setValue(codeSnippData.htmlCode, -1);
+      cssEditor.setValue(codeSnippData.cssCode, -1);
+      jsEditor.setValue(codeSnippData.jsCode, -1);
+      htmlEditor.setReadOnly(true);
+      cssEditor.setReadOnly(true);
+      jsEditor.setReadOnly(true);
+    } else {
+      htmlEditor.setValue('<div>Hello, World!</div>', -1);
+      cssEditor.setValue('div { color: red; }', -1);
+      jsEditor.setValue('console.log("Hello, World!");', -1);
+    }
 
     // Run initial code
     run();
-  }, []);
+  }, [codeSnippData]);
 
   const handleSubmit = async () => {
-    const htmlCode = htmlEditorRef.current.env.editor.getValue();
-    const cssCode = cssEditorRef.current.env.editor.getValue();
-    const jsCode = jsEditorRef.current.env.editor.getValue();
-
     if (!title || !description) {
       alert("Title and description are required.");
       return;
     }
 
-    if (!editorData) {
-      alert("Something went wrong");
-      return;
-    }
-    
+    const htmlCode = htmlEditorRef.current.env.editor.getValue();
+    const cssCode = cssEditorRef.current.env.editor.getValue();
+    const jsCode = jsEditorRef.current.env.editor.getValue();
+
     const payload = {
       userID: editorData, // Username passed from Navbar
       title: title,
@@ -114,6 +122,7 @@ const LiveCodeEditor = ({ editorData }) => {
     }
   };
 
+
   return (
     <div className="container">
       
@@ -126,6 +135,9 @@ const LiveCodeEditor = ({ editorData }) => {
             value={title} 
             onChange={(e) => setTitle(e.target.value)} 
             placeholder="Enter the title" 
+
+            readOnly={!!codeSnippData} // Set readOnly if codeSnippData is not null
+
           />
         </div>
 
@@ -136,6 +148,9 @@ const LiveCodeEditor = ({ editorData }) => {
             value={description} 
             onChange={(e) => setDescription(e.target.value)} 
             placeholder="Enter the description" 
+
+            readOnly={!!codeSnippData} // Set readOnly if codeSnippData is not null
+
           />
         </div>
         <label><i className="fa-brands fa-html5"></i> HTML</label>
@@ -147,7 +162,8 @@ const LiveCodeEditor = ({ editorData }) => {
         <label><i className="fa-brands fa-js"></i> JavaScript</label>
         <div id="js-editor" ref={jsEditorRef} className="code-editor"></div>
 
-        <button onClick={handleSubmit} className="submit-button">Submit</button>
+        <button onClick={handleSubmit} className="submit-button" disabled={!!codeSnippData}>Submit</button>
+
       </div>
       <div className="right">
         <label><i className="fa-solid fa-play"></i> Output</label>

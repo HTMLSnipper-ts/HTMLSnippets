@@ -40,4 +40,10 @@ public class SnippetDownvotesServiceImpl implements SnippetDownvotesService {
     public Optional<SnippetDownvotes> isDownvoted(SnippetDownvotes.SnippetDownvotesId id) {
         return snippetDownvotesRepository.findById(id);
     }
+    
+ // Get the number of downvotes for a specific snippet
+    @Override
+    public Long getDownvoteCountBySnippet(Integer snippetID) {
+        return snippetDownvotesRepository.countBySnippetSnippetID(snippetID);
+    }
 }

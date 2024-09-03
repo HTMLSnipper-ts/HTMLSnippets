@@ -18,4 +18,6 @@ public interface SnippetDownvotesService {
 
 	Optional<SnippetDownvotes> isDownvoted(SnippetDownvotesId snippetDownvotesId);
 
+	Long getDownvoteCountBySnippet(Integer snippetID);
+
 }

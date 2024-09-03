@@ -12,4 +12,5 @@ import com.example.CodeSnippetLambda.model.SnippetDownvotes.SnippetDownvotesId;
 public interface SnippetDownvotesRepository extends JpaRepository<SnippetDownvotes, SnippetDownvotesId> {
     List<SnippetDownvotes> findByUserEmail(String userID);
     List<SnippetDownvotes> findBySnippetSnippetID(Integer snippetID);
+	Long countBySnippetSnippetID(Integer snippetID);
 }

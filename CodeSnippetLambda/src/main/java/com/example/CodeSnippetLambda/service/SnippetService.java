@@ -19,4 +19,6 @@ public interface SnippetService {
 
 	void deleteSnippet(int snippetID);
 
+	List<Snippet> searchSnippets(String query);
+
 }

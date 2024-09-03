@@ -14,14 +14,16 @@ Amplify.configure(awsExports);
 
 function App() {
   const [editorData, setEditorData] = useState(null);
+  const [codeSnippData, setCodeSnippData] = useState(null);
+
 
   return (
     <Authenticator loginMechanism={['email']}>
       <Router>
         <Navbar setEditorData={setEditorData} />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/code-editor" element={<LiveCodeEditor editorData={editorData} />} />
+          <Route path="/" element={<Home codeSnippData={codeSnippData} setCodeSnippData={setCodeSnippData} />} />
+          <Route path="/code-editor" element={<LiveCodeEditor editorData={editorData} codeSnippData={codeSnippData}/>} />
           <Route path="/search/:query" element={<SearchResults />} /> {/* Add this route */}
         </Routes>
       </Router>
