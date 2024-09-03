@@ -81,4 +81,15 @@ public class SnippetDownvotesController {
         return downvoteData.map(downvote -> new ResponseEntity<>(downvote, HttpStatus.OK))
                            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    
+ // Get the number of downvotes for a specific snippet
+    @GetMapping("/count/snippet/{snippetID}")
+    public ResponseEntity<Long> getDownvoteCountBySnippet(@PathVariable("snippetID") Integer snippetID) {
+        try {
+            Long count = snippetDownvotesService.getDownvoteCountBySnippet(snippetID);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

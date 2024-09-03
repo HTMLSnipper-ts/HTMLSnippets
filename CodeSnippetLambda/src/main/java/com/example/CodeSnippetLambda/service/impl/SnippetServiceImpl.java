@@ -52,4 +52,10 @@ public class SnippetServiceImpl implements SnippetService{
     public void deleteSnippet(int snippetID) {
         snippetRepository.deleteById(snippetID);
     }
+
+	@Override
+	public List<Snippet> searchSnippets(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

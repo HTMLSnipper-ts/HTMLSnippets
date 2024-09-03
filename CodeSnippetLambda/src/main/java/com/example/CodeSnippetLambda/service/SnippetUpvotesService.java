@@ -18,4 +18,6 @@ public interface SnippetUpvotesService {
 
 	Optional<SnippetUpvotes> isUpvoted(SnippetUpvotesId snippetUpvotesId);
 
+	Long getUpvoteCountBySnippet(Integer snippetID);
+
 }

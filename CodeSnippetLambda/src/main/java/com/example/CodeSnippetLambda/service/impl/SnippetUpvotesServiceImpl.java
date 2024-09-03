@@ -40,4 +40,10 @@ public class SnippetUpvotesServiceImpl implements SnippetUpvotesService {
     public Optional<SnippetUpvotes> isUpvoted(SnippetUpvotes.SnippetUpvotesId id) {
         return snippetUpvotesRepository.findById(id);
     }
+	
+	// Get the number of upvotes for a specific snippet
+    @Override
+    public Long getUpvoteCountBySnippet(Integer snippetID) {
+        return snippetUpvotesRepository.countBySnippetSnippetID(snippetID);
+    }
 }
